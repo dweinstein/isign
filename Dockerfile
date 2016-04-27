@@ -3,7 +3,7 @@ RUN apt-get update &&  \
       apt-get install -q -q -y --no-install-recommends \
       openssl \
       unzip \
-      zip \
+      zip && \
       apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /isign
