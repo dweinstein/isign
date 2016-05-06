@@ -98,7 +98,7 @@ class Codesig(object):
             # so this is actually a difference between libs and apps
             # entitlements_data = macho_cs.Blob_.build(entitlements)
             # log.debug(hashlib.sha1(entitlements_data).hexdigest())
-            import ipdb; ipdb.set_trace()
+            #import ipdb; ipdb.set_trace()
             entitlements.bytes = open(entitlements_path, "rb").read()
             entitlements.length = len(entitlements.bytes) + 8
             # entitlements_data = macho_cs.Blob_.build(entitlements)
