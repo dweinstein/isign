@@ -89,14 +89,16 @@ class Codesig(object):
         try:
             entitlements = self.get_blob('CSMAGIC_ENTITLEMENT')
         except KeyError:
-            log.debug("no entitlements found")
+            log.debug("no entitlements found for %s", self.signable.path)
+            # entitlements.bytes = open(entitlements_path, "rb").read()
+            # entitlements.length = len(entitlements.bytes) + 8
         else:
             # make entitlements data if slot was found
             # libraries do not have entitlements data
             # so this is actually a difference between libs and apps
             # entitlements_data = macho_cs.Blob_.build(entitlements)
             # log.debug(hashlib.sha1(entitlements_data).hexdigest())
-
+            import ipdb; ipdb.set_trace()
             entitlements.bytes = open(entitlements_path, "rb").read()
             entitlements.length = len(entitlements.bytes) + 8
             # entitlements_data = macho_cs.Blob_.build(entitlements)
@@ -180,6 +182,7 @@ class Codesig(object):
 
         cd = self.get_codedirectory()
         cd.data.teamID = signer.team_id
+        log.debug('setting team id to %s for %s' % (signer.team_id, self.signable.path))
 
         cd.bytes = macho_cs.CodeDirectory.build(cd.data)
         # cd_data = macho_cs.Blob_.build(cd)
@@ -227,6 +230,7 @@ class Codesig(object):
         # visitor pattern?
         if hasattr(bundle, 'entitlements_path'):
             self.set_entitlements(bundle.entitlements_path)
+
         self.set_requirements(signer)
         # See docs/codedirectory.rst for some notes on optional hashes
         self.set_codedirectory(bundle.seal_path, signer)

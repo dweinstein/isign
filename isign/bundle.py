@@ -67,23 +67,25 @@ class Bundle(object):
         # log.debug("SIGNING: %s" % self.path)
         frameworks_path = join(self.path, 'Frameworks')
         if exists(frameworks_path):
-            # log.debug("SIGNING FRAMEWORKS: %s" % frameworks_path)
+            log.debug("SIGNING FRAMEWORKS: %s" % frameworks_path)
             # sign all the frameworks
             for framework_name in os.listdir(frameworks_path):
                 framework_path = join(frameworks_path, framework_name)
-                # log.debug("checking for framework: %s" % framework_path)
+                log.debug("checking for framework: %s" % framework_path)
                 try:
                     framework = Framework(framework_path)
-                    # log.debug("resigning: %s" % framework_path)
+                    log.debug("resigning: %s" % framework_path)
                     framework.resign(signer)
-                except NotMatched:
-                    # log.debug("not a framework: %s" % framework_path)
+                except NotMatched as e:
+                    #import ipdb; ipdb.set_trace()
+                    log.debug("not a framework: %s %s" % (framework_path, str(e)))
                     continue
             # sign all the dylibs
             dylib_paths = glob.glob(join(frameworks_path, '*.dylib'))
             for dylib_path in dylib_paths:
                 dylib = signable.Dylib(dylib_path)
                 dylib.sign(self, signer)
+                import ipdb; ipdb.set_trace()
 
         plugins_path = join(self.path, 'PlugIns')
         if exists(plugins_path):

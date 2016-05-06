@@ -5,6 +5,7 @@
 *.log
 *.log.*
 *.pid
+scratch
 
 # apple
 .DS_Store

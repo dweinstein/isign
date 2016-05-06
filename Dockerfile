@@ -5,6 +5,10 @@ RUN apt-get update &&  \
       unzip \
       zip && \
       apt-get clean && rm -rf /var/lib/apt/lists/*
+COPY ./requirements.txt /tmp/requirements.txt
+RUN pip install ipdb ipython \
+  && pip install --no-cache-dir -r /tmp/requirements.txt \
+  && rm -f /tmp/requirements.txt 
 
 WORKDIR /isign
 COPY . /isign

@@ -130,7 +130,7 @@ class Signable(object):
         macho.MachoFile.build_stream(self.m, temp)
         temp.close()
 
-        # log.debug("moving temporary file to {0}".format(self.path))
+        log.debug("moving {0} temporary file to {1}".format(temp.name, self.path))
         os.rename(temp.name, self.path)
 
 
